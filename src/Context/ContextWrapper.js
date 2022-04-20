@@ -3,33 +3,42 @@ import React, {
   } from "react";
   import GlobalContext from "./GlobalContext";
   import dayjs from "dayjs"; 
+  //import axios from "axios";
 
   export default function ContextWrapper(props) {
     const [monthIndex, setMonthIndex] = useState(dayjs().locale("es").month());
     const [smallCalendarMonth, setSmallCalendarMonth] = useState(null);
     const [daySelected, setDaySelected] = useState(dayjs());
-    const [usuarios, setUsuarios] = useState([]);
+    // const [usuarios, setUsuarios] = useState([]); 
+    //const [actividades, setActividades] = useState([]); 
 
-
-    useEffect(() => {
-      setUsuarios((prevUsuarios) => {
-        return [...new Set(savedUsuarios.map((x) => x.id))].map(
-          (id) => {
-            const currentLabel = prevUsuarios.find(
-              (lbl) => lbl.id === id
-            );
-            return {
-              id,
-              checked: currentLabel ? currentLabel.checked : true,
-            };
-          }
-        );
-      });
-    }, [savedEvents]);
+    // useEffect(() => {
+    //   console.log('tin')
+    //   axios.post('frmCalendarioV2.aspx/ObtenerListadoActividadesxUsuxFecha', {}, {
+    //     headers: { 'Content-Type': 'application/json' }
+    //   })
+    //     .then((res) => {
+    //       if (res.status === 200) {
+    //         if (res.data.d !== undefined) {
+    //           setActividades(res.data.d)
+    //           //console.log(res.data.d)
+    //         }
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       //alert('Ocurrió un error !')
+    //       setActividades([{day:1,ASUNTO_FLUJOTRABAJO:'tin'},{day:2,ASUNTO_FLUJOTRABAJO:'tan'}])
+    //       console.log(actividades)
+    //     })
+    //     .then(() => {
+    //       //setCargando(false)
+    //     })
+    // }, [actividades])
 
     useEffect(() => {
       if (smallCalendarMonth !== null) {
         setMonthIndex(smallCalendarMonth);
+        //console.log(monthIndex)
       }
     }, [smallCalendarMonth]);
 
