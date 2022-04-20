@@ -2,8 +2,7 @@ import dayjs from "dayjs";
 import React, { useContext, useEffect, useState } from "react";
 import { getMonth } from "../Util/Util";
 import GlobalContext from "../Context/GlobalContext";
-import { es } from "dayjs/locale/es";
-dayjs.locale("es");
+
 export default function MiniCalendario() {
   const [currentMonthIdx, setCurrentMonthIdx] = useState(
     dayjs().month()

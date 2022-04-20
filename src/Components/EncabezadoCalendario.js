@@ -1,8 +1,6 @@
 import dayjs from "dayjs";
 import React, { useContext } from "react";
 import GlobalContext from "../Context/GlobalContext";
-import { es } from "dayjs/locale/es";
-dayjs.locale("es");
 
 export default function EncabezadoCalendario() {
   const { monthIndex, setMonthIndex } = useContext(GlobalContext);

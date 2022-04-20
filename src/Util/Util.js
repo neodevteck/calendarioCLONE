@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { es } from "dayjs/locale/es";
+require('dayjs/locale/es')
 dayjs.locale("es");
 
 export function getMonth(month = dayjs().locale("es").month()) {

@@ -1,17 +1,9 @@
-
-import React,{useState,useContext,useEffect} from "react";
+import React,{useContext} from "react";
 import dayjs from "dayjs";
-import { es } from "dayjs/locale/es";
 import GlobalContext from "../Context/GlobalContext";
-dayjs.locale("es");
-
-export default function Dia({ day, rowIdx }) {
-    const [dayEvents, setDayEvents] = useState([]);
+export default function Dia({ day, rowIdx }) {    
     const {
-      setDaySelected,
-      setShowEventModal,
-      filteredEvents,
-      setSelectedEvent,
+      setDaySelected,    
     } = useContext(GlobalContext);  
     
     
@@ -37,8 +29,7 @@ export default function Dia({ day, rowIdx }) {
       <div
         className="flex-1 cursor-pointer"
         onClick={() => {
-          setDaySelected(day);
-          setShowEventModal(true);
+          setDaySelected(day);          
         }}
       >
         
