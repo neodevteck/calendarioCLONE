@@ -1,22 +1,22 @@
 import React, { useContext } from "react";
-import GlobalContext from "../context/GlobalContext";
+import GlobalContext from "../Context/GlobalContext";
 
 export default function Usuarios() {
-  const { usuarios, updateUsuarios } = useContext(GlobalContext);
+  const { usuarios, updateUsuario } = useContext(GlobalContext);
   return (
     <React.Fragment>
-      <p className="text-gray-500 font-bold mt-10">Usuario</p>
-      {usuarios.map(({ label: lbl, checked }, idx) => (
+      <p className="text-gray-500 font-bold mt-10">Usuarios</p>
+      {usuarios.map(({ id, checked,nombre }, idx) => (
         <label key={idx} className="items-center mt-3 block">
           <input
             type="checkbox"
             checked={checked}
             onChange={() =>
-                updateUsuarios({ label: lbl, checked: !checked })
+                updateUsuario({ id: id, checked: !checked,nombre:nombre })
             }
-            className={`form-checkbox h-5 w-5 text-${lbl}-400 rounded focus:ring-0 cursor-pointer`}
+            className={`form-checkbox h-5 w-5 rounded focus:ring-0 cursor-pointer`}
           />
-          <span className="ml-2 text-gray-700 capitalize">{lbl}</span>
+          <span className="ml-2 text-gray-700 capitalize">{nombre}</span>
         </label>
       ))}
     </React.Fragment>
