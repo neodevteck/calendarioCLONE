@@ -6,29 +6,35 @@ import EncabezadoCalendario from "./Components/EncabezadoCalendario";
 import GlobalContext from "./Context/GlobalContext";
 import axios from 'axios';
 import dayjs from "dayjs";
+import Usuarios from './Components/Usuarios';
 function App() {
   const [currenMonth, setCurrentMonth] = useState(getMonth());
-  const [actividades, setActividades] = useState([]);  
-
-  const { monthIndex,idUsuario,setIdUsuario,setUsuarios,setActividadesMes,actividadesMes } = useContext(GlobalContext);
+  const { monthIndex,idUsuario,setIdUsuario,setUsuarios,setActividadesMes,usuarios } = useContext(GlobalContext);
 
   useEffect(() => {
    
-      axios.post('frmCalendarioV2.aspx/ObtenerUsuarioId', {}, {
+      axios.post('frmCalendarioV2.aspx/ObtenerUsuario', {}, {
         headers: { 'Content-Type': 'application/json' }
       })
         .then((res) => {
           if (res.status === 200) {
             if (res.data.d !== undefined) {
-              setIdUsuario(res.data.d)
+              let idUsu = res.data.d.id
+              let nomUsu = res.data.d.nombre
+              setIdUsuario(idUsu)
+              setUsuarios([{id:idUsu,nombre:nomUsu,checked:true}])
               //setActividades([{ day: 1, ASUNTO_FLUJOTRABAJO: 'tin',fecha:'/Date(1649394000000)/' }, { day: 20, ASUNTO_FLUJOTRABAJO: 'tan',fecha:'/Date(1649394000000)/' }])
               console.log(res.data.d)
             }
           }
         }).catch((error) => {
           setIdUsuario(5)
+          //setUsuarios([{id:5,nombre:'Yohan Alberto Salazar Baena',checked:true}])
           setUsuarios([{id:5,nombre:'Yohan Alberto Salazar Baena',checked:true}])
-          console.log(idUsuario)
+
+          //updateUsuario({id:7,nombre:'WTF',checked:true})
+
+          //console.log(idUsuario)
         })
     
   }, [idUsuario]);
@@ -47,8 +53,7 @@ function App() {
     })
       .then((res) => {
         if (res.status === 200) {
-          if (res.data.d !== undefined) {
-            setActividades(res.data.d)
+          if (res.data.d !== undefined) {           
             setActividadesMes(res.data.d)
             //setActividades([{ day: 1, ASUNTO_FLUJOTRABAJO: 'tin',fecha:'/Date(1649394000000)/' }, { day: 20, ASUNTO_FLUJOTRABAJO: 'tan',fecha:'/Date(1649394000000)/' }])
             console.log(res.data.d)

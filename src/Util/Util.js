@@ -16,11 +16,6 @@ export function getMonth(month = dayjs().locale("es").month()) {
   return daysMatrix;
 }
 
-// export function timeConvert(ds){
-//   let d=ds.match(/(\d+)/)[1];
-//   return new Date(+d).toUTCString();
-// }
-
 export function timeConvert(ds){
   let T, tz, off,
       dobj = ds.match(/(-?\d+)|([+-])|(\d{4})/g);
@@ -34,18 +29,5 @@ export function timeConvert(ds){
       if(tz === '-') off *= -1;
   }
   else off= 0;
-  //console.log(new Date(T += off).toUTCString())
   return new Date(T += off).toUTCString();
-}
-
-export function validaFechas(acts,day){
-  let lis = []
-  for (let i = 0; i < acts.length; i++) {   
-    if (typeof(acts.FECHACALFIN_FLUJOTRABAJO) != 'undefined'){
-      lis.push(acts[i])
-      //console.log([acts[i].FECHACALFIN_FLUJOTRABAJO])
-    }
-  }
-  //console.log(lis)
-  return lis;
 }

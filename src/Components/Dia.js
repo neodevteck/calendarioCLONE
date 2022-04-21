@@ -1,10 +1,10 @@
 import React,{useContext,useState,useEffect} from "react";
 import dayjs from "dayjs";
 import GlobalContext from "../Context/GlobalContext";
-import { validaFechas,timeConvert } from "../Util/Util";
+import { timeConvert } from "../Util/Util";
 
 
-export default function Dia({ day, rowIdx,actsDia }) {   
+export default function Dia({ day, rowIdx }) {   
   //console.log(actsDia)
   const [dayEvents, setDayEvents] = useState([]);
     const {
@@ -13,15 +13,27 @@ export default function Dia({ day, rowIdx,actsDia }) {
     
     useEffect(() => {
       //console.log(filtrarActividades)
-      const events = filtrarActividades.filter(
+
+      const events =
+      filtrarActividades?
+      filtrarActividades.filter(
         (x) =>
         {
           if ((x.FECHACALINI_FLUJOTRABAJO != undefined) && (x.FECHACALINI_FLUJOTRABAJO != null) && (x.FECHACALFIN_FLUJOTRABAJO != undefined) && (x.FECHACALFIN_FLUJOTRABAJO != null) && ((dayjs(timeConvert(x.FECHACALINI_FLUJOTRABAJO)).format("DD-MM-YY")  === day.format("DD-MM-YY")) || (dayjs(timeConvert(x.FECHACALFIN_FLUJOTRABAJO)).format("DD-MM-YY")  === day.format("DD-MM-YY")))){
             return true    
            } 
-           
+           if ((x.FECHACALINI2_FLUJOTRABAJO != undefined) && (x.FECHACALINI2_FLUJOTRABAJO != null) && (x.FECHACALFIN2_FLUJOTRABAJO != undefined) && (x.FECHACALFIN2_FLUJOTRABAJO != null) && ((dayjs(timeConvert(x.FECHACALINI2_FLUJOTRABAJO)).format("DD-MM-YY")  === day.format("DD-MM-YY")) || (dayjs(timeConvert(x.FECHACALFIN2_FLUJOTRABAJO)).format("DD-MM-YY")  === day.format("DD-MM-YY")))){
+            return true    
+           } 
+           if ((x.FECHACALINI3_FLUJOTRABAJO != undefined) && (x.FECHACALINI3_FLUJOTRABAJO != null) && (x.FECHACALFIN3_FLUJOTRABAJO != undefined) && (x.FECHACALFIN3_FLUJOTRABAJO != null) && ((dayjs(timeConvert(x.FECHACALINI3_FLUJOTRABAJO)).format("DD-MM-YY")  === day.format("DD-MM-YY")) || (dayjs(timeConvert(x.FECHACALFIN3_FLUJOTRABAJO)).format("DD-MM-YY")  === day.format("DD-MM-YY")))){
+            return true    
+           } 
+           if ((x.FECHACALINI4_FLUJOTRABAJO != undefined) && (x.FECHACALINI4_FLUJOTRABAJO != null) && (x.FECHACALFIN4_FLUJOTRABAJO != undefined) && (x.FECHACALFIN4_FLUJOTRABAJO != null) && ((dayjs(timeConvert(x.FECHACALINI4_FLUJOTRABAJO)).format("DD-MM-YY")  === day.format("DD-MM-YY")) || (dayjs(timeConvert(x.FECHACALFIN4_FLUJOTRABAJO)).format("DD-MM-YY")  === day.format("DD-MM-YY")))){
+            return true    
+           } 
+           return false
         }
-      );
+      ):[]
       console.log(events)
       setDayEvents(events);
     }, [filtrarActividades, day]);  
@@ -70,7 +82,7 @@ export default function Dia({ day, rowIdx,actsDia }) {
           <div         
             key={idx}
             // onClick={() => (window.open('../../FlujodeTrabajo/Formularios/frmCrearActividades.aspx?Formulario=frmCreaActividades&ID='+ evt.FLUJOTRABAJOID_FLUJOTRABAJO, '_blank'))}
-            onClick={() => (window.location.href = '../../FlujodeTrabajo/Formularios/frmCrearActividades.aspx?Formulario=frmCreaActividades&ID='+ evt.FLUJOTRABAJOID_FLUJOTRABAJO, '_blank')}
+            onClick={() => (window.location.href = `../../FlujodeTrabajo/Formularios/frmCrearActividades.aspx?Formulario=frmCreaActividades&ID=${evt.FLUJOTRABAJOID_FLUJOTRABAJO}` , '_blank')}
             
             className={`${ObtenerClaseColor(evt)} p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate`}
           >
