@@ -5,15 +5,19 @@ import Sidebar from "./Components/Sidebar";
 import EncabezadoCalendario from "./Components/EncabezadoCalendario";
 import GlobalContext from "./Context/GlobalContext";
 import axios from 'axios';
+import dayjs from "dayjs";
 function App() {
   const [currenMonth, setCurrentMonth] = useState(getMonth());
   const [actividades, setActividades] = useState([]);
+  
 
   const { monthIndex } = useContext(GlobalContext);
   useEffect(() => {
     setCurrentMonth(getMonth(monthIndex));
     console.log('tin')
-    axios.post('frmCalendarioV2.aspx/ObtenerListadoActividadesxUsuxFecha', {}, {
+    //console.log(currenMonth[0][6])
+    
+    axios.post('frmCalendarioV2.aspx/ObtenerActividadesxTerceIdxFechaInixFechaFin', {FechaInicial:dayjs(currenMonth[0][0]).format("DD-MM-YY").toString(),FechaFinal:dayjs(currenMonth[4][6]).format("DD-MM-YY").toString()}, {
       headers: { 'Content-Type': 'application/json' }
     })
       .then((res) => {
@@ -27,7 +31,7 @@ function App() {
       })
       .catch((error) => {
         //alert('Ocurrió un error !')
-        setActividades([{ ASUNTO_FLUJOTRABAJO: 'tin',FECHACALFIN_FLUJOTRABAJO:undefined }, { ASUNTO_FLUJOTRABAJO: 'tan',FECHACALFIN_FLUJOTRABAJO:'/Date(1649394000000)/' }])
+        setActividades([{ ASUNTO_FLUJOTRABAJO: 'tin',FECHACALINI_FLUJOTRABAJO:'/Date(1649394000000)/',FECHACALFIN_FLUJOTRABAJO:'/Date(1649384000000)/' }, { ASUNTO_FLUJOTRABAJO: 'tan',FECHACALINI_FLUJOTRABAJO:'/Date(1649394000000)/', FECHACALFIN_FLUJOTRABAJO:'/Date(1649384000000)/'},{ ASUNTO_FLUJOTRABAJO: 'tan',FECHACALINI_FLUJOTRABAJO:'/Date(1649394000000)/', FECHACALFIN_FLUJOTRABAJO:'/Date(1649384000000)/'},])
         //console.log(actividades)
       })
       .then(() => {

@@ -17,11 +17,20 @@ export default function Month({ mes ,actividadesMes}) {
 <Dia day={day} key={idx} rowIdx={i} actsDia = {
   
   actividadesMes.filter(  x  =>  {   
-    console.log('fecha: ' + typeof(x.FECHACALFIN_FLUJOTRABAJO))    
-    if ((typeof(x.FECHACALFIN_FLUJOTRABAJO) != 'undefined') && (typeof(x.FECHACALFIN_FLUJOTRABAJO) != 'null') && (dayjs(timeConvert(x.FECHACALFIN_FLUJOTRABAJO)).format("DD-MM-YY")  === day.format("DD-MM-YY"))){
+    // console.log('fecha: ' + typeof(x.FECHACALFIN_FLUJOTRABAJO))   
+    if ((x.FECHACALINI_FLUJOTRABAJO !== undefined) && (x.FECHACALINI_FLUJOTRABAJO !== null) && (x.FECHACALFIN_FLUJOTRABAJO !== undefined) && (x.FECHACALFIN_FLUJOTRABAJO !== null) && ((dayjs(timeConvert(x.FECHACALINI_FLUJOTRABAJO)).format("DD-MM-YY")  === day.format("DD-MM-YY")) || (dayjs(timeConvert(x.FECHACALFIN_FLUJOTRABAJO)).format("DD-MM-YY")  === day.format("DD-MM-YY")))){
      return true    
     } 
-   return false
+    if ((x.FECHACALINI2_FLUJOTRABAJO !== undefined) && (x.FECHACALINI2_FLUJOTRABAJO !== null) && (x.FECHACALFIN2_FLUJOTRABAJO !== undefined) && (x.FECHACALFIN2_FLUJOTRABAJO !== null) && ((dayjs(timeConvert(x.FECHACALINI2_FLUJOTRABAJO)).format("DD-MM-YY")  === day.format("DD-MM-YY")) || (dayjs(timeConvert(x.FECHACALFIN2_FLUJOTRABAJO)).format("DD-MM-YY")  === day.format("DD-MM-YY")))){
+      return true    
+     } 
+     if ((x.FECHACALINI3_FLUJOTRABAJO !== undefined) && (x.FECHACALINI3_FLUJOTRABAJO !== null) && (x.FECHACALFIN3_FLUJOTRABAJO !== undefined) && (x.FECHACALFIN3_FLUJOTRABAJO !== null) && ((dayjs(timeConvert(x.FECHACALINI3_FLUJOTRABAJO)).format("DD-MM-YY")  === day.format("DD-MM-YY")) || (dayjs(timeConvert(x.FECHACALFIN3_FLUJOTRABAJO)).format("DD-MM-YY")  === day.format("DD-MM-YY")))){
+      return true    
+     } 
+     if ((x.FECHACALINI4_FLUJOTRABAJO !== undefined) && (x.FECHACALINI4_FLUJOTRABAJO !== null) && (x.FECHACALFIN4_FLUJOTRABAJO !== undefined) && (x.FECHACALFIN4_FLUJOTRABAJO !== null) && ((dayjs(timeConvert(x.FECHACALINI4_FLUJOTRABAJO)).format("DD-MM-YY")  === day.format("DD-MM-YY")) || (dayjs(timeConvert(x.FECHACALFIN4_FLUJOTRABAJO)).format("DD-MM-YY")  === day.format("DD-MM-YY")))){
+      return true    
+     }     
+      return false
   } )
 
 } />
