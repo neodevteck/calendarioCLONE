@@ -15,6 +15,14 @@ export function getMonth(month = dayjs().locale("es").month()) {
   });
   return daysMatrix;
 }
+export function getDay(day = dayjs().locale("es").day(), month = dayjs().locale("es").month()){
+  const year = dayjs().locale("es").year();
+  console.log('year: ' + year)
+  console.log('mes: ' + month)
+  console.log('day: ' + day)
+
+  return dayjs(new Date(year, month, day)).locale("es");
+}
 
 export function timeConvert(ds){
   let T, tz, off,
@@ -31,3 +39,5 @@ export function timeConvert(ds){
   else off= 0;
   return new Date(T += off).toUTCString();
 }
+
+

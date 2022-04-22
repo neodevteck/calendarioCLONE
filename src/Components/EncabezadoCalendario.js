@@ -2,8 +2,9 @@ import dayjs from "dayjs";
 import React, { useContext } from "react";
 import GlobalContext from "../Context/GlobalContext";
 
+
 export default function EncabezadoCalendario() {
-  const { monthIndex, setMonthIndex } = useContext(GlobalContext);
+  const { monthIndex, setMonthIndex,setOpcionVista } = useContext(GlobalContext);
   function handlePrevMonth() {
     setMonthIndex(monthIndex - 1);
   }
@@ -17,8 +18,14 @@ export default function EncabezadoCalendario() {
         : dayjs().month()
     );
   }
+
+  function OpcionVista(e){
+    console.log(e.target.value)
+    setOpcionVista(e.target.value)
+  }
   return (
-    <header className="px-4 py-2 flex items-center">     
+    <React.Fragment>
+<header className="px-4 py-2 flex items-center">     
       <h1 className="mr-10 text-xl text-gray-500 fond-bold">
         Calendario
       </h1>
@@ -43,6 +50,26 @@ export default function EncabezadoCalendario() {
           "MMMM YYYY"
         )}
       </h2>
+      <select class="form-select form-select-sm     
+        block
+        px-2
+        py-1
+        ml-2
+        text-sm
+        font-normal
+        text-gray-700
+        bg-white bg-clip-padding bg-no-repeat
+        border border-solid border-gray-300
+        rounded
+        transition
+        ease-in-out
+        m-0
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label=".form-select-sm example" onChange={OpcionVista} >
+      <option selected value="1">Mes</option>
+      <option value="2">Dia</option>
+    </select>
     </header>
+    </React.Fragment>   
+    
   );
 }

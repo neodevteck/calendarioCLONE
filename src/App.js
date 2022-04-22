@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { getMonth } from "./Util/Util";
+import { getDay, getMonth } from "./Util/Util";
 import Mes from "./Components/Mes";
+import Dia from "./Components/Dia"
 import Sidebar from "./Components/Sidebar";
 import EncabezadoCalendario from "./Components/EncabezadoCalendario";
 import GlobalContext from "./Context/GlobalContext";
 import axios from 'axios';
 import dayjs from "dayjs";
-import Usuarios from './Components/Usuarios';
+
 function App() {
   const [currenMonth, setCurrentMonth] = useState(getMonth());
-  const { monthIndex,idUsuario,setIdUsuario,setUsuarios,setActividadesMes,usuarios } = useContext(GlobalContext);
+  //const [currenDay, setCurrentDay] = useState(dayjs().locale("es"));
+
+  const { dayIndex,monthIndex,setIdUsuario,setUsuarios,setActividadesMes,usuarios,opcionVista,daySelected } = useContext(GlobalContext);
 
   useEffect(() => {
    
@@ -24,44 +27,46 @@ function App() {
               setIdUsuario(idUsu)
               setUsuarios([{id:idUsu,nombre:nomUsu,checked:true}])
               //setActividades([{ day: 1, ASUNTO_FLUJOTRABAJO: 'tin',fecha:'/Date(1649394000000)/' }, { day: 20, ASUNTO_FLUJOTRABAJO: 'tan',fecha:'/Date(1649394000000)/' }])
-              console.log(res.data.d)
+              //console.log(res.data.d)
             }
           }
         }).catch((error) => {
           setIdUsuario(5)
           //setUsuarios([{id:5,nombre:'Yohan Alberto Salazar Baena',checked:true}])
           setUsuarios([{id:5,nombre:'Yohan Alberto Salazar Baena',checked:true}])
-
+          //usuarios = [{id:5,nombre:'Yohan Alberto Salazar Baena',checked:true},{id:6,nombre:'Yohan Alberto Salazar Baena',checked:true}]
           //updateUsuario({id:7,nombre:'WTF',checked:true})
 
           //console.log(idUsuario)
         })
     
-  }, [idUsuario]);
+  }, [setIdUsuario,setUsuarios]);
 
 
   useEffect(() => {
-    setCurrentMonth(getMonth(monthIndex));
-    //console.log('tin')
-    //console.log(monthIndex)
-    console.log(idUsuario)
-    // console.log(dayjs(getMonth(monthIndex)[0][0]).format("DD-MM-YY").toString())
-    // console.log(dayjs(getMonth(monthIndex)[4][6]).format("DD-MM-YY").toString())
+      console.log(dayjs())
+      //console.log(dayIndex)
+      //console.log(monthIndex)
 
-    axios.post('frmCalendarioV2.aspx/ObtenerActividadesxTerceIdxFechaInixFechaFin', {FechaInicial:dayjs(getMonth(monthIndex)[0][0]).format("DD-MM-YY").toString(),FechaFinal:dayjs(getMonth(monthIndex)[4][6]).format("DD-MM-YY").toString()}, {
+    setCurrentMonth(getMonth(monthIndex));  
+    // console.log(monthIndex)
+    // console.log(dayIndex) 
+
+    //setCurrentDay(getDay(dayIndex,monthIndex))
+    let arrIds = usuarios.map(x => x.id)
+    //console.log(arrIds)
+    
+    axios.post('frmCalendarioV2.aspx/ObtenerActividadesxTerceIdxFechaInixFechaFin', {FechaInicial:dayjs(getMonth(monthIndex)[0][0]).format("DD-MM-YY").toString(),FechaFinal:dayjs(getMonth(monthIndex)[4][6]).format("DD-MM-YY").toString(),ArrIds: arrIds ? arrIds : []}, {
       headers: { 'Content-Type': 'application/json' }
     })
       .then((res) => {
         if (res.status === 200) {
           if (res.data.d !== undefined) {           
-            setActividadesMes(res.data.d)
-            //setActividades([{ day: 1, ASUNTO_FLUJOTRABAJO: 'tin',fecha:'/Date(1649394000000)/' }, { day: 20, ASUNTO_FLUJOTRABAJO: 'tan',fecha:'/Date(1649394000000)/' }])
-            console.log(res.data.d)
+            setActividadesMes(res.data.d)        
           }
         }
       })
-      .catch((error) => {
-        //alert('Ocurrió un error !')
+      .catch((error) => {    
         setActividadesMes([
           {
               "__type": "Datos.T_FLUJOTRABAJO",
@@ -424,7 +429,7 @@ function App() {
                   "TotalMinutes": 1020,
                   "TotalSeconds": 61200
               },
-              "TERCERECURSOCTROL4ID_FLUJOTRABAJO": 5,
+              "TERCERECURSOCTROL4ID_FLUJOTRABAJO": 2047,
               "VALUERECURSO4_FLUJOTRABAJO": null,
               "NOMRECURSO4_FLUJOTRABAJO": null,
               "CODSALON_FLUJOTRABAJO": null,
@@ -6804,7 +6809,7 @@ function App() {
               "NOMCONTPROSP1_FLUJOTRABAJO": null,
               "NOMCONTPROVE1_FLUJOTRABAJO": null,
               "NOMCONTDISTR1_FLUJOTRABAJO": null,
-              "TERCERECURSOCTROLID_FLUJOTRABAJO": 5,
+              "TERCERECURSOCTROLID_FLUJOTRABAJO": 2047,
               "VALUEPROY_FLUJOTRABAJO": null,
               "NOMPROY_FLUJOTRABAJO": null,
               "VALUESUBPROY_FLUJOTRABAJO": null,
@@ -7351,14 +7356,12 @@ function App() {
               "T_ROLES": null,
               "T_OBSERVACIONES": []
           }
-      ])
-        //console.log(actividades)
+      ])        
       })
       .then(() => {
-        //setActividades([{ day: 1, ASUNTO_FLUJOTRABAJO: 'tin' }, { day: 2, ASUNTO_FLUJOTRABAJO: 'tan' }])
-        //setCargando(false)
+        
       })
-  }, [monthIndex]);
+  }, [dayIndex,monthIndex,setActividadesMes,usuarios]);
 
   return (
     <React.Fragment>
@@ -7366,7 +7369,11 @@ function App() {
         <EncabezadoCalendario />
         <div className="flex flex-1">
           <Sidebar />
-          <Mes mes={currenMonth} />
+          {
+              console.log('daySelected' + daySelected)
+          }
+          { opcionVista == 1 ?  <Mes mes={currenMonth} /> : <Dia day={daySelected} key={1} rowIdx={1}/>}
+          
         </div>
       </div>
     </React.Fragment>

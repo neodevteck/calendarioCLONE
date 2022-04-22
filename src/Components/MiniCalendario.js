@@ -25,6 +25,7 @@ export default function MiniCalendario() {
 
   function handlePrevMonth() {
     setCurrentMonthIdx(currentMonthIdx - 1);
+    console.log(daySelected)
   }
   function handleNextMonth() {
     setCurrentMonthIdx(currentMonthIdx + 1);

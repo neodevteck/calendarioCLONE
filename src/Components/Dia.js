@@ -2,13 +2,21 @@ import React,{useContext,useState,useEffect} from "react";
 import dayjs from "dayjs";
 import GlobalContext from "../Context/GlobalContext";
 import { timeConvert } from "../Util/Util";
-
+import Hora from "./Hora";
 
 export default function Dia({ day, rowIdx }) {   
-  //console.log(actsDia)
+  //console.log(day)
+  //let arrHoras = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
+  let arrHoras = [{hora:1,jornada:'am',horam:1},{hora:2,jornada:'am',horam:2},{hora:3,jornada:'am',horam:3},
+  {hora:4,jornada:'am',horam:4},{hora:5,jornada:'am',horam:5},{hora:6,jornada:'am',horam:1},{hora:7,jornada:'am',horam:7},
+  {hora:8,jornada:'am',horam:8},{hora:9,jornada:'am',horam:9},{hora:10,jornada:'am',horam:10},{hora:11,jornada:'am',horam:11},
+  {hora:12,jornada:'am',horam:12},{hora:1,jornada:'pm',horam:13},{hora:2,jornada:'pm',horam:14},{hora:3,jornada:'pm',horam:15},
+  {hora:4,jornada:'pm',horam:16},{hora:5,jornada:'pm',horam:17},{hora:6,jornada:'pm',horam:18},{hora:7,jornada:'pm',horam:19},
+  {hora:8,jornada:'pm',horam:20},{hora:9,jornada:'pm',horam:21},{hora:10,jornada:'pm',horam:22},{hora:11,jornada:'pm',horam:23}]
+
   const [dayEvents, setDayEvents] = useState([]);
     const {
-      setDaySelected,idUsuario ,filtrarActividades       
+      setDaySelected,idUsuario ,filtrarActividades,opcionVista       
     } = useContext(GlobalContext);  
     
     useEffect(() => {
@@ -34,7 +42,7 @@ export default function Dia({ day, rowIdx }) {
            return false
         }
       ):[]
-      console.log(events)
+      //console.log(events)
       setDayEvents(events);
     }, [filtrarActividades, day]);  
 
@@ -44,7 +52,7 @@ export default function Dia({ day, rowIdx }) {
       : "";
   }
 
-  function ObtenerClaseColor(evt){  
+   function ObtenerClaseColor(evt){  
     let claseColor = 'colorAzul'
     if (evt.ESTADO_FLUJOTRABAJO === 3){
       claseColor = 'colorVerde'
@@ -57,8 +65,10 @@ export default function Dia({ day, rowIdx }) {
     }
     return claseColor
   }
+  
   return (
-    <div className="border border-gray-200 flex flex-col">
+    opcionVista == 1 ?
+    <div className="border border-gray-200 flex flex-col ">
       <header className="flex flex-col items-center">
         {rowIdx === 0 && (
           <p className="text-sm mt-1">
@@ -77,8 +87,7 @@ export default function Dia({ day, rowIdx }) {
           setDaySelected(day);          
         }}
       >
-        {dayEvents.map((evt, idx) => (      
-          
+        {dayEvents.map((evt, idx) => (     
           <div         
             key={idx}
             // onClick={() => (window.open('../../FlujodeTrabajo/Formularios/frmCrearActividades.aspx?Formulario=frmCreaActividades&ID='+ evt.FLUJOTRABAJOID_FLUJOTRABAJO, '_blank'))}
@@ -88,9 +97,40 @@ export default function Dia({ day, rowIdx }) {
           >
               {evt.FLUJOTRABAJOID_FLUJOTRABAJO.toLocaleString()} - {evt.ASUNTO_FLUJOTRABAJO}
           </div>
-         
         ))}
       </div>
-    </div>
+    </div> :
+     <div className="flex-1 grid grid-cols-1 grid-rows-24">   
+     {console.log(dayEvents)}
+      <React.Fragment>
+        {
+        arrHoras.map((hora, idx) => (
+        <Hora hora = {hora.hora} jornada = {hora.jornada} eventos={
+          dayEvents ?
+          dayEvents.filter(
+            (x) =>
+            {
+              if ((x.HORACALINI_FLUJOTRABAJO != undefined) && (x.HORACALINI_FLUJOTRABAJO != null) && (x.HORACALFIN_FLUJOTRABAJO != undefined) && (x.HORACALFIN_FLUJOTRABAJO != null) && (x.HORACALINI_FLUJOTRABAJO.Hours  === hora.horam || x.HORACALFIN_FLUJOTRABAJO.Hours  === hora.horam)){
+                return true    
+               } 
+               if ((x.HORACALINI2_FLUJOTRABAJO != undefined) && (x.HORACALINI2_FLUJOTRABAJO != null) && (x.HORACALFIN2_FLUJOTRABAJO != undefined) && (x.HORACALFIN2_FLUJOTRABAJO != null) && (x.HORACALINI2_FLUJOTRABAJO.Hours  === hora.horam || x.HORACALFIN2_FLUJOTRABAJO.Hours  === hora.horam)){
+                return true    
+               } 
+               if ((x.HORACALINI3_FLUJOTRABAJO != undefined) && (x.HORACALINI3_FLUJOTRABAJO != null) && (x.HORACALFIN3_FLUJOTRABAJO != undefined) && (x.HORACALFIN3_FLUJOTRABAJO != null) && (x.HORACALINI3_FLUJOTRABAJO.Hours  === hora.horam || x.HORACALFIN3_FLUJOTRABAJO.Hours  === hora.horam)){
+                return true    
+               } 
+               if ((x.HORACALINI4_FLUJOTRABAJO != undefined) && (x.HORACALINI4_FLUJOTRABAJO != null) && (x.HORACALFIN4_FLUJOTRABAJO != undefined) && (x.HORACALFIN4_FLUJOTRABAJO != null) && (x.HORACALINI4_FLUJOTRABAJO.Hours  === hora.horam || x.HORACALFIN4_FLUJOTRABAJO.Hours  === hora.horam)){
+                return true    
+               } 
+               return false
+            }
+          ) : []          
+        } 
+  
+        />
+        )
+        )}
+      </React.Fragment>
+      </div>
   );
 }

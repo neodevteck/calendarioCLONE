@@ -6,6 +6,9 @@ import React, {
 
   export default function ContextWrapper(props) {
     const [monthIndex, setMonthIndex] = useState(dayjs().locale("es").month());
+    const [dayIndex, setDayIndex] = useState(dayjs().locale("es").$D);
+    const [opcionVista, setOpcionVista] = useState(1);
+
     const [idUsuario, setIdUsuario] = useState(0);
     const [smallCalendarMonth, setSmallCalendarMonth] = useState(null);
     const [daySelected, setDaySelected] = useState(dayjs());
@@ -19,7 +22,7 @@ import React, {
     }, [smallCalendarMonth]);   
 
     const filtrarActividades = useMemo(() => {
-      console.log(ActividadesMes)
+      //console.log(ActividadesMes)
       return ActividadesMes ? ActividadesMes.filter((evt) =>
         usuarios
           .filter((lbl) => lbl.checked)
@@ -38,6 +41,8 @@ import React, {
       <GlobalContext.Provider value={{
         monthIndex,
         setMonthIndex,
+        dayIndex,
+        setDayIndex,
         smallCalendarMonth,
         setSmallCalendarMonth,
         daySelected,
@@ -49,7 +54,9 @@ import React, {
         updateUsuario,
         ActividadesMes,
         setActividadesMes,
-        filtrarActividades
+        filtrarActividades,
+        setOpcionVista,
+        opcionVista
         }}>
         {props.children}
       </GlobalContext.Provider>
