@@ -21,8 +21,7 @@ import React, {
       }
     }, [smallCalendarMonth]);   
 
-    const filtrarActividades = useMemo(() => {
-      //console.log(ActividadesMes)
+    const filtrarActividades = useMemo(() => {      
       return ActividadesMes ? ActividadesMes.filter((evt) =>
         usuarios
           .filter((lbl) => lbl.checked)

@@ -1,0 +1,2 @@
+module.exports = [{id:2041,nombre:'Paula',checked:true},{id:2042,nombre:'Ana',checked:true},{id:785,nombre:'Ruben',checked:true},
+{id:3342,nombre:'anyela',checked:true},{id:5,nombre:'ing',checked:true}]

@@ -50,7 +50,7 @@ export default function EncabezadoCalendario() {
           "MMMM YYYY"
         )}
       </h2>
-      <select class="form-select form-select-sm     
+      <select className="form-select form-select-sm     
         block
         px-2
         py-1
@@ -65,7 +65,7 @@ export default function EncabezadoCalendario() {
         ease-in-out
         m-0
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label=".form-select-sm example" onChange={OpcionVista} >
-      <option selected value="1">Mes</option>
+      <option defaultValue={'1'} value="1">Mes</option>
       <option value="2">Dia</option>
     </select>
     </header>
