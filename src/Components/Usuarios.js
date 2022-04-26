@@ -9,7 +9,7 @@ export default function Usuarios() {
       {usuarios.map(({ id, checked,nombre }, idx) => (
         
         <label key={idx} className="items-center mt-3 block">
-            {console.log(id)}
+
           <input
             type="checkbox"
             checked={checked}

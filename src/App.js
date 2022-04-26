@@ -26,20 +26,20 @@ console.log('APP')
 
   useEffect(() => {
    
-    //   axios.post('frmCalendarioV2.aspx/ObtenerUsuario', {}, {
-    //     headers: { 'Content-Type': 'application/json' }
-    //   })
-    //     .then((res) => {
-    //       if (res.status === 200) {
-    //         if (res.data.d !== undefined) {
-    //           let idUsu = res.data.d.id
-    //           let nomUsu = res.data.d.nombre
-    //           setIdUsuario(idUsu)
-    //           setUsuarios([{id:idUsu,nombre:nomUsu,checked:true}])           
-    //         }
-    //       }
-    //     }).catch((error) => {        
-    //     })
+      // axios.post('frmCalendarioV2.aspx/ObtenerUsuario', {}, {
+      //   headers: { 'Content-Type': 'application/json' }
+      // })
+      //   .then((res) => {
+      //     if (res.status === 200) {
+      //       if (res.data.d !== undefined) {
+      //         let idUsu = res.data.d.id
+      //         let nomUsu = res.data.d.nombre
+      //         setIdUsuario(idUsu)
+      //         setUsuarios([{id:idUsu,nombre:nomUsu,checked:true}])           
+      //       }
+      //     }
+      //   }).catch((error) => {        
+      //   })
     setIdUsuario(2041)
     setUsuarios(usuario)
   }, [setIdUsuario,setUsuarios]);
@@ -47,7 +47,7 @@ console.log('APP')
 
   useEffect(() => {
     setCurrentMonth(getMonth(monthIndex));
-    let arrIds = usuarios.map(x => x.id)   
+    // let arrIds = usuarios.map(x => x.id)   
     // axios.post('frmCalendarioV2.aspx/ObtenerActividadesxTerceIdxFechaInixFechaFin', {FechaInicial:dayjs(getMonth(monthIndex)[0][0]).format("DD-MM-YY").toString(),FechaFinal:dayjs(getMonth(monthIndex)[4][6]).format("DD-MM-YY").toString(),ArrIds: arrIds ? arrIds : []}, {
     //   headers: { 'Content-Type': 'application/json' }
     // })
@@ -62,9 +62,8 @@ console.log('APP')
     //   .catch((error) => {              
     //   })
    
-    setActividadesMes(actividades)    
-    setCurrentMonth(getMonth(monthIndex));
-      console.log(actividades)
+    setActividadesMes(actividades)       
+     // console.log(actividades)
   }, [dayIndex,monthIndex,setActividadesMes,usuarios]);
 
   return (
